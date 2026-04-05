@@ -4,7 +4,11 @@ import 'package:weather_app/utils/app_colors.dart';
 class AppTheme {
   static ThemeData get lightTheme {
     return ThemeData(
-      colorSchemeSeed: AppColors.primaryColor,
+      colorScheme: ColorScheme.fromSeed(
+        brightness: Brightness.light,
+        seedColor: AppColors.seedColor,
+        secondary: AppColors.secondayColor,
+      ),
       useMaterial3: true,
       brightness: Brightness.light,
       appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),
@@ -13,7 +17,11 @@ class AppTheme {
 
   static ThemeData get darkTheme {
     return ThemeData(
-      colorSchemeSeed: AppColors.primaryColor,
+      colorScheme: ColorScheme.fromSeed(
+        brightness: Brightness.dark,
+        seedColor: AppColors.seedColor,
+        secondary: AppColors.secondayColor,
+      ),
       useMaterial3: true,
       brightness: Brightness.dark,
       appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),

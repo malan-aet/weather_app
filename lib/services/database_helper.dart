@@ -27,7 +27,7 @@ class DatabaseHelper {
 
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE $AppConstants.tableCities (
+      CREATE TABLE ${AppConstants.tableCities} (
         ${AppConstants.columnId} INTEGER PRIMARY KEY AUTOINCREMENT,
         ${AppConstants.columnName} TEXT NOT NULL UNIQUE,
         ${AppConstants.columnCreatedAt} TEXT NOT NULL
@@ -60,7 +60,7 @@ class DatabaseHelper {
     final db = await database;
     return await db.delete(
       AppConstants.tableCities,
-      where: 'LOWER(${AppConstants.columnName}) = ?',
+      where: '${AppConstants.columnName} = ?',
       whereArgs: [cityName],
     );
   }
