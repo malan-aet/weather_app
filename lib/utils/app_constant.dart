@@ -1,6 +1,8 @@
 class AppConstants {
   //API ----------------------------------------------------
   static const String baseUrl = 'https://api.weatherapi.com/v1';
+  static const String paramKey = 'key';
+  static const String paramQuery = 'q';
 
   //Database -----------------------------------------------
   static const String databaseName = 'weather_app.db';
