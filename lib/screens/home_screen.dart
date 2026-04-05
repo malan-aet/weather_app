@@ -82,9 +82,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _openForecast(String cityName) {
-    // Navigator.of(context).push(
-    //   MaterialPageRoute(builder: (_) => ForecastScreen(cityName: cityName)),
-    // );
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => ForecastScreen(cityName: cityName)),
+    );
   }
 
   @override
@@ -109,12 +109,12 @@ class _HomeScreenState extends State<HomeScreen> {
         label: const Text(AppStrings.addCity),
       ),
       body: Consumer<WeatherProvider>(
-        builder: (context, provider, _) {
-          if (provider.isLoading && provider.weatherData.isEmpty) {
+        builder: (context, weatherProvider, _) {
+          if (weatherProvider.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
 
-          if (provider.weatherData.isEmpty) {
+          if (weatherProvider.weatherData.isEmpty) {
             return Center(
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
@@ -147,18 +147,18 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           }
 
-          final weatherEntries = provider.weatherData.values.toList();
+          final weatherList = weatherProvider.weatherData.values.toList();
 
           return RefreshIndicator(
-            onRefresh: () => provider.refreshAllCities(),
+            onRefresh: () => weatherProvider.refreshAllCities(),
             child: ListView.builder(
               padding: const EdgeInsets.only(
                 top: AppSize.s8,
                 bottom: AppSize.s8,
               ),
-              itemCount: weatherEntries.length,
+              itemCount: weatherList.length,
               itemBuilder: (context, index) {
-                final weather = weatherEntries[index];
+                final weather = weatherList[index];
                 return WeatherCard(
                   weather: weather,
                   onDelete: () => _deleteCity(weather.location.name),

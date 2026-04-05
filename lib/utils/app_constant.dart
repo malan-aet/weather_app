@@ -3,6 +3,11 @@ class AppConstants {
   static const String baseUrl = 'https://api.weatherapi.com/v1';
   static const String paramKey = 'key';
   static const String paramQuery = 'q';
+  static const String paramDays = 'days';
+  static const int forecastDays = 3;
+  //API URL ENdpoints --------------------------------------
+  static const String currentWeatherEndPointURL = '/current.json';
+  static const String forecastEndPointURL = '/forecast.json';
 
   //Database -----------------------------------------------
   static const String databaseName = 'weather_app.db';

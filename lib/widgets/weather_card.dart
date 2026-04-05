@@ -83,7 +83,7 @@ class WeatherCard extends StatelessWidget {
                       ),
                       const SizedBox(width: AppSize.s8),
                       Text(
-                        AppStrings.humidityPercent(
+                        AppStrings.valuePercent(
                           weather.currentCondition.humidity,
                         ),
                         style: AppStyles.getRegularStyle(),

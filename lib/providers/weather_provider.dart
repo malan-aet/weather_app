@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/models/forecast_model.dart';
 import 'package:weather_app/models/weather_location_model.dart';
 import 'package:weather_app/services/api_service.dart';
 import '../services/storage_service.dart';
@@ -9,6 +10,7 @@ class WeatherProvider extends ChangeNotifier {
   final StorageService _storageService;
 
   final Map<String, WeatherLocationModel> _weatherData = {};
+  final Map<String, List<ForecastModel>> _forecastData = {};
   bool _isLoading = false;
   String? _errorMessage;
 
@@ -18,6 +20,8 @@ class WeatherProvider extends ChangeNotifier {
 
   Map<String, WeatherLocationModel> get weatherData =>
       Map.unmodifiable(_weatherData);
+  Map<String, List<ForecastModel>> get forecastData =>
+      Map.unmodifiable(_forecastData);
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
   List<String> get cities => _weatherData.keys.toList();
@@ -115,6 +119,24 @@ class WeatherProvider extends ChangeNotifier {
 
     _isLoading = false;
     notifyListeners();
+  }
+
+  // get Forecast list
+  Future<List<ForecastModel>> loadForecast(String cityName) async {
+    if (_forecastData.containsKey(cityName)) {
+      return _forecastData[cityName]!;
+    }
+
+    try {
+      final forecasts = await _apiService.fetchForecast(cityName);
+      _forecastData[cityName] = forecasts;
+      notifyListeners();
+      return forecasts;
+    } on Exception catch (e) {
+      _errorMessage = e.toString();
+      notifyListeners();
+      return [];
+    }
   }
 
   void clearError() {

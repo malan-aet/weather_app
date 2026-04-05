@@ -10,6 +10,7 @@ class AppStrings {
       'Something went wrong. Please try again.';
   static String cityAlreadyExists(String city) =>
       '$city is already in your list.';
+  static String failedToLoadForecast = 'Failed to load forecast data. ';
 
   //Screens
   static const String homeTitle = 'Weather';
@@ -31,5 +32,13 @@ class AppStrings {
       'Do you want to remove $city?';
   static String cityRemoved(String city) => '$city removed';
   static String tempCelsius(double temp) => '${temp.round()}°C';
-  static String humidityPercent(int value) => '$value%';
+  static String valuePercent(int value) => '$value%';
+  static String windSpeed(double kph) => '$kph km/h';
+  static const String dateFormatInput = 'yyyy-MM-dd';
+  static const String dateFormatDisplay = 'EEEE, MMM d';
+  static const String humidity = 'Humidity';
+  static const String wind = 'Wind';
+  static const String rain = 'Rain';
+  static const String forecastTitle = '3-Day Forecast';
+  static const String hourlyTitle = 'Hourly';
 }
