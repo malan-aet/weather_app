@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/utils/app_size.dart';
 import 'package:weather_app/utils/app_styles.dart';
+import 'package:weather_app/utils/helper_utils.dart';
 import '../models/forecast_model.dart';
 import '../models/weather_location_model.dart';
 import '../providers/weather_provider.dart';
 import '../utils/app_colors.dart';
-import '../utils/app_fonts.dart';
 import '../utils/app_strings.dart';
-import '../utils/app_theme.dart';
 
 class ForecastScreen extends StatefulWidget {
   final String cityName;
@@ -52,7 +50,8 @@ class _ForecastScreenState extends State<ForecastScreen> {
 
           return Column(
             children: [
-              if (currentWeather != null) _buildCurrentHeader(currentWeather),
+              if (currentWeather != null)
+                _weatherLocationHeaderWidget(currentWeather),
               const Divider(height: 1),
               Padding(
                 padding: const EdgeInsets.fromLTRB(
@@ -77,7 +76,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
                 child: PageView.builder(
                   itemCount: forecasts.length,
                   itemBuilder: (context, index) {
-                    return _buildForecastPage(forecasts[index]);
+                    return _forecastListWidget(forecasts[index]);
                   },
                 ),
               ),
@@ -88,7 +87,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
     );
   }
 
-  Widget _buildCurrentHeader(WeatherLocationModel weather) {
+  Widget _weatherLocationHeaderWidget(WeatherLocationModel weather) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(AppSize.s16),
@@ -118,17 +117,17 @@ class _ForecastScreenState extends State<ForecastScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _infoChip(
+              _forecastInfoCard(
                 Icons.water_drop_outlined,
                 AppStrings.valuePercent(weather.currentCondition.windDegree),
               ),
               const SizedBox(width: AppSize.s16),
-              _infoChip(
+              _forecastInfoCard(
                 Icons.air,
                 AppStrings.windSpeed(weather.currentCondition.windKph),
               ),
               const SizedBox(width: AppSize.s16),
-              _infoChip(
+              _forecastInfoCard(
                 Icons.thermostat_outlined,
                 AppStrings.tempCelsius(weather.currentCondition.feelslikec),
               ),
@@ -139,7 +138,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
     );
   }
 
-  Widget _infoChip(IconData icon, String label) {
+  Widget _forecastInfoCard(IconData icon, String label) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -150,8 +149,8 @@ class _ForecastScreenState extends State<ForecastScreen> {
     );
   }
 
-  Widget _buildForecastPage(ForecastModel forecast) {
-    final dateStr = _formatDate(forecast.date!);
+  Widget _forecastListWidget(ForecastModel forecast) {
+    final dateStr = HelperUtils.formatDate(forecast.date!);
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(AppSize.s8),
@@ -212,17 +211,17 @@ class _ForecastScreenState extends State<ForecastScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  _detailColumn(
+                  _detailForecastWidget(
                     Icons.water_drop,
                     AppStrings.valuePercent(forecast.day!.avghumidity!),
                     AppStrings.humidity,
                   ),
-                  _detailColumn(
+                  _detailForecastWidget(
                     Icons.air,
                     AppStrings.windSpeed(forecast.day!.maxwindKph!),
                     AppStrings.wind,
                   ),
-                  _detailColumn(
+                  _detailForecastWidget(
                     Icons.umbrella,
                     AppStrings.valuePercent(forecast.day!.dailyChanceOfRain!),
                     AppStrings.rain,
@@ -242,7 +241,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
               separatorBuilder: (_, _) => const SizedBox(width: AppSize.s8),
               itemBuilder: (context, index) {
                 final hour = forecast.hour![index];
-                return _buildHourChip(hour);
+                return _forecastHourCard(hour);
               },
             ),
           ),
@@ -251,7 +250,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
     );
   }
 
-  Widget _detailColumn(IconData icon, String value, String label) {
+  Widget _detailForecastWidget(IconData icon, String value, String label) {
     return Column(
       children: [
         Icon(
@@ -266,7 +265,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
     );
   }
 
-  Widget _buildHourChip(HourForecast hour) {
+  Widget _forecastHourCard(HourForecast hour) {
     final timeParts = hour.time!.split(' ');
     final displayTime = timeParts.length > 1 ? timeParts[1] : hour.time;
 
@@ -313,14 +312,5 @@ class _ForecastScreenState extends State<ForecastScreen> {
         ),
       ),
     );
-  }
-
-  String _formatDate(String dateStr) {
-    try {
-      final date = DateFormat(AppStrings.dateFormatInput).parse(dateStr);
-      return DateFormat(AppStrings.dateFormatDisplay).format(date);
-    } catch (_) {
-      return dateStr;
-    }
   }
 }

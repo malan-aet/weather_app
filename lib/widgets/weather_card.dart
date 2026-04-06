@@ -5,7 +5,6 @@ import 'package:weather_app/utils/app_size.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_fonts.dart';
 import '../utils/app_strings.dart';
-import '../utils/app_theme.dart';
 
 class WeatherCard extends StatelessWidget {
   final WeatherLocationModel weather;
