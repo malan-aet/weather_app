@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => WeatherProvider(),
       child: MaterialApp(
+        title: AppStrings.appTitle,
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
