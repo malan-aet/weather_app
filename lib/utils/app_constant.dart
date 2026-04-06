@@ -1,4 +1,9 @@
 class AppConstants {
+  //Config -------------------------------------------------
+  static const String envFileName = '.env';
+  static const String envApiKeyName = 'API_KEY';
+  static const String dateFormatInput = 'yyyy-MM-dd';
+  static const String dateFormatDisplay = 'EEEE, MMM d';
   //API ----------------------------------------------------
   static const String baseUrl = 'https://api.weatherapi.com/v1';
   static const String paramKey = 'key';
