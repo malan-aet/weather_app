@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:weather_app/models/forecast_model.dart';
-import 'package:weather_app/models/weather_location_model.dart';
-import 'package:weather_app/utils/app_constant.dart';
+import 'package:weather_app/data/models/forecast_model.dart';
+import 'package:weather_app/data/models/weather_location_model.dart';
+import 'package:weather_app/core/constants/app_constant.dart';
 
 class ApiService {
   final http.Client client;

@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:weather_app/utils/app_constant.dart';
+import 'package:weather_app/core/constants/app_constant.dart';
 
 class HelperUtils {
   static String formatDate(String dateStr) {

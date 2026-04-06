@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:weather_app/l10n/app_localizations.dart';
 import 'package:weather_app/providers/weather_provider.dart';
 import 'package:weather_app/screens/home_screen.dart';
-import 'package:weather_app/utils/app_constant.dart';
-import 'package:weather_app/utils/app_theme.dart';
+import 'package:weather_app/core/constants/app_constant.dart';
+import 'package:weather_app/core/utils/app_theme.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();

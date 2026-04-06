@@ -5,7 +5,7 @@ import 'package:http/testing.dart';
 import 'package:weather_app/providers/weather_provider.dart';
 import 'package:weather_app/services/api_service.dart';
 
-import 'fake_storage_service.dart';
+import 'fake_weather_dao.dart';
 
 void main() {
   final validResponseJson = {
@@ -68,7 +68,7 @@ void main() {
 
       final provider = WeatherProvider(
         apiService: ApiService(client: mockClient, apiKey: 'key'),
-        storageService: FakeStorageService(),
+        weatherDao: FakeWeatherDao(),
       );
 
       await provider.addCity('London');
@@ -85,7 +85,7 @@ void main() {
 
       final provider = WeatherProvider(
         apiService: ApiService(client: mockClient, apiKey: 'key'),
-        storageService: FakeStorageService(),
+        weatherDao: FakeWeatherDao(),
       );
 
       await provider.addCity('London');
@@ -98,7 +98,7 @@ void main() {
     test('clear Error resets error message', () async {
       final provider = WeatherProvider(
         apiService: ApiService(apiKey: 'key'),
-        storageService: FakeStorageService(),
+        weatherDao: FakeWeatherDao(),
       );
 
       await provider.addCity('');

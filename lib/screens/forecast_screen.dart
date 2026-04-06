@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/l10n/app_localizations.dart';
-import 'package:weather_app/utils/app_size.dart';
-import 'package:weather_app/utils/app_styles.dart';
-import 'package:weather_app/utils/helper_utils.dart';
-import '../models/forecast_model.dart';
-import '../models/weather_location_model.dart';
+import 'package:weather_app/core/utils/app_size.dart';
+import 'package:weather_app/core/utils/app_styles.dart';
+import 'package:weather_app/core/utils/helper_utils.dart';
+import '../data/models/forecast_model.dart';
+import '../data/models/weather_location_model.dart';
 import '../providers/weather_provider.dart';
-import '../utils/app_colors.dart';
+import '../core/utils/app_colors.dart';
 
 class ForecastScreen extends StatefulWidget {
   final String cityName;

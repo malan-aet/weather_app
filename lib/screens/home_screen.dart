@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/l10n/app_localizations.dart';
-import 'package:weather_app/utils/app_size.dart';
+import 'package:weather_app/core/utils/app_size.dart';
 import '../providers/weather_provider.dart';
-import '../utils/app_colors.dart';
+import '../core/utils/app_colors.dart';
 import '../widgets/weather_card.dart';
 import '../widgets/add_city_dialog.dart';
 import 'forecast_screen.dart';
