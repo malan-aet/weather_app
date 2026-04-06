@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/utils/app_colors.dart';
+import 'package:weather_app/core/utils/app_colors.dart';
+import 'package:weather_app/core/utils/app_fonts.dart';
 
 class AppTheme {
   static ThemeData get lightTheme {
@@ -9,6 +10,7 @@ class AppTheme {
         seedColor: AppColors.seedColor,
         secondary: AppColors.secondayColor,
       ),
+      fontFamily: AppFonts.fontFamily,
       useMaterial3: true,
       brightness: Brightness.light,
       appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),
@@ -22,6 +24,7 @@ class AppTheme {
         seedColor: AppColors.seedColor,
         secondary: AppColors.secondayColor,
       ),
+      fontFamily: AppFonts.fontFamily,
       useMaterial3: true,
       brightness: Brightness.dark,
       appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),

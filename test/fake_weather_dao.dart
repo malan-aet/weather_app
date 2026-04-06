@@ -1,15 +1,15 @@
-import 'package:weather_app/services/storage_service.dart';
+import 'package:weather_app/data/database/dao/weather_dao.dart';
 
-class FakeStorageService extends StorageService {
+class FakeWeatherDao extends WeatherDao {
   final List<String> _cities = [];
 
-  FakeStorageService() : super(dbHelper: null);
+  FakeWeatherDao() : super();
 
   @override
-  Future<List<String>> loadCities() async => List.from(_cities);
+  Future<List<String>> getAllCities() async => List.from(_cities);
 
   @override
-  Future<bool> addCity(String city) async {
+  Future<bool> insertCity(String city) async {
     if (_cities.map((c) => c.toLowerCase()).contains(city.toLowerCase())) {
       return false;
     }
@@ -18,12 +18,13 @@ class FakeStorageService extends StorageService {
   }
 
   @override
-  Future<bool> removeCity(String city) async {
+  Future<bool> deleteCity(String city) async {
     final before = _cities.length;
     _cities.removeWhere((c) => c.toLowerCase() == city.toLowerCase());
     return _cities.length < before;
   }
 
+  @override
   Future<bool> cityExists(String city) async {
     return _cities.map((c) => c.toLowerCase()).contains(city.toLowerCase());
   }

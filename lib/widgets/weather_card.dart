@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/l10n/app_localizations.dart';
-import 'package:weather_app/models/weather_location_model.dart';
-import 'package:weather_app/utils/app_styles.dart';
-import 'package:weather_app/utils/app_size.dart';
-import '../utils/app_colors.dart';
-import '../utils/app_fonts.dart';
+import 'package:weather_app/data/models/weather_location_model.dart';
+import 'package:weather_app/core/utils/app_styles.dart';
+import 'package:weather_app/core/utils/app_size.dart';
+import '../core/utils/app_colors.dart';
+import '../core/utils/app_fonts.dart';
 
 class WeatherCard extends StatelessWidget {
   final WeatherLocationModel weather;
@@ -55,7 +55,7 @@ class WeatherCard extends StatelessWidget {
                     const SizedBox(height: AppSize.s8),
                     Text(
                       weather.location.country,
-                      style: AppStyles.getLightStyle(fontSize: AppFontSize.s10),
+                      style: AppStyles.getLightStyle(fontSize: AppFonts.s10),
                     ),
                     const SizedBox(height: AppSize.s8),
                     Text(
