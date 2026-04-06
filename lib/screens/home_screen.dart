@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app/utils/app_size.dart';
+import 'package:weather_app/l10n/app_localizations.dart';
+import 'package:weather_app/core/utils/app_size.dart';
 import '../providers/weather_provider.dart';
-import '../utils/app_colors.dart';
-import '../utils/app_strings.dart';
+import '../core/utils/app_colors.dart';
 import '../widgets/weather_card.dart';
 import '../widgets/add_city_dialog.dart';
 import 'forecast_screen.dart';
@@ -25,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _showAddCityDialog() async {
+    final l10n = AppLocalizations.of(context)!;
     final cityName = await showDialog<String>(
       context: context,
       builder: (ctx) => const AddCityDialog(),
@@ -39,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
           SnackBar(
             content: Text(provider.errorMessage!),
             action: SnackBarAction(
-              label: AppStrings.ok,
+              label: l10n.ok,
               onPressed: () => provider.clearError(),
             ),
           ),
@@ -51,16 +52,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _deleteCity(String cityName) {
     final provider = context.read<WeatherProvider>();
+    final l10n = AppLocalizations.of(context)!;
 
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text(AppStrings.removeCityTitle),
-        content: Text(AppStrings.removeCityMessage(cityName)),
+        title: Text(l10n.removeCityTitle),
+        content: Text(l10n.removeCityMessage(cityName)),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(),
-            child: Text(AppStrings.cancel),
+            child: Text(l10n.cancel),
           ),
           FilledButton(
             onPressed: () {
@@ -68,13 +70,13 @@ class _HomeScreenState extends State<HomeScreen> {
               Navigator.of(ctx).pop();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(AppStrings.cityRemoved(cityName)),
+                  content: Text(l10n.cityRemoved(cityName)),
                   duration: const Duration(seconds: 10),
                 ),
               );
             },
             style: FilledButton.styleFrom(backgroundColor: AppColors.redAccent),
-            child: const Text(AppStrings.remove),
+            child: Text(l10n.remove),
           ),
         ],
       ),
@@ -89,14 +91,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppStrings.homeTitle),
+        title: Text(l10n.homeTitle),
         centerTitle: true,
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: AppStrings.refreshAll,
+            tooltip: l10n.refreshAll,
             onPressed: () {
               context.read<WeatherProvider>().refreshAllCities();
             },
@@ -106,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _showAddCityDialog,
         icon: const Icon(Icons.add),
-        label: const Text(AppStrings.addCity),
+        label: Text(l10n.addCity),
       ),
       body: Consumer<WeatherProvider>(
         builder: (context, weatherProvider, _) {
@@ -128,14 +131,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SizedBox(height: AppSize.s16),
                     Text(
-                      AppStrings.noCitiesTitle,
+                      l10n.noCitiesTitle,
                       style: Theme.of(
                         context,
                       ).textTheme.titleLarge?.copyWith(color: AppColors.grey),
                     ),
                     const SizedBox(height: AppSize.s16),
                     Text(
-                      AppStrings.noCitiesSubtitle,
+                      l10n.noCitiesSubtitle,
                       textAlign: TextAlign.center,
                       style: Theme.of(
                         context,

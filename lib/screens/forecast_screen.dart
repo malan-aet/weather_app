@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app/utils/app_size.dart';
-import 'package:weather_app/utils/app_styles.dart';
-import 'package:weather_app/utils/helper_utils.dart';
-import '../models/forecast_model.dart';
-import '../models/weather_location_model.dart';
+import 'package:weather_app/l10n/app_localizations.dart';
+import 'package:weather_app/core/utils/app_size.dart';
+import 'package:weather_app/core/utils/app_styles.dart';
+import 'package:weather_app/core/utils/helper_utils.dart';
+import '../data/models/forecast_model.dart';
+import '../data/models/weather_location_model.dart';
 import '../providers/weather_provider.dart';
-import '../utils/app_colors.dart';
-import '../utils/app_strings.dart';
+import '../core/utils/app_colors.dart';
 
 class ForecastScreen extends StatefulWidget {
   final String cityName;
@@ -32,6 +32,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
   Widget build(BuildContext context) {
     final provider = context.watch<WeatherProvider>();
     final currentWeather = provider.weatherData[widget.cityName];
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(title: Text(widget.cityName), centerTitle: true),
@@ -43,7 +44,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
           }
 
           if (snapshot.hasError) {
-            return Center(child: Text(AppStrings.failedToLoadForecast));
+            return Center(child: Text(l10n.failedToLoadForecast));
           }
 
           final forecasts = snapshot.data!;
@@ -64,10 +65,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
                   children: [
                     const Icon(Icons.calendar_today, size: AppSize.s32),
                     const SizedBox(width: AppSize.s8),
-                    Text(
-                      AppStrings.forecastTitle,
-                      style: AppStyles.getBoldStyle(),
-                    ),
+                    Text(l10n.forecastTitle, style: AppStyles.getBoldStyle()),
                     const Spacer(),
                   ],
                 ),
@@ -88,6 +86,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
   }
 
   Widget _weatherLocationHeaderWidget(WeatherLocationModel weather) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(AppSize.s16),
@@ -106,7 +105,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
           ),
           const SizedBox(height: AppSize.s8),
           Text(
-            AppStrings.tempCelsius(weather.currentCondition.tempc),
+            l10n.tempCelsius(weather.currentCondition.tempc.toInt()),
             style: AppStyles.getLightStyle(),
           ),
           Text(
@@ -119,17 +118,17 @@ class _ForecastScreenState extends State<ForecastScreen> {
             children: [
               _forecastInfoCard(
                 Icons.water_drop_outlined,
-                AppStrings.valuePercent(weather.currentCondition.windDegree),
+                l10n.valuePercent(weather.currentCondition.windDegree),
               ),
               const SizedBox(width: AppSize.s16),
               _forecastInfoCard(
                 Icons.air,
-                AppStrings.windSpeed(weather.currentCondition.windKph),
+                l10n.windSpeed(weather.currentCondition.windKph),
               ),
               const SizedBox(width: AppSize.s16),
               _forecastInfoCard(
                 Icons.thermostat_outlined,
-                AppStrings.tempCelsius(weather.currentCondition.feelslikec),
+                l10n.tempCelsius(weather.currentCondition.feelslikec.toInt()),
               ),
             ],
           ),
@@ -151,6 +150,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
 
   Widget _forecastListWidget(ForecastModel forecast) {
     final dateStr = HelperUtils.formatDate(forecast.date!);
+    final l10n = AppLocalizations.of(context)!;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(AppSize.s8),
@@ -183,13 +183,11 @@ class _ForecastScreenState extends State<ForecastScreen> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        AppStrings.tempCelsius(forecast.day!.maxtempC!),
+                        l10n.tempCelsius(forecast.day!.maxtempC!.toInt()),
                         style: AppStyles.getBoldStyle(),
                       ),
                       Text(
-                        AppStrings.tempCelsius(
-                          forecast.day!.mintempC!.toDouble(),
-                        ),
+                        l10n.tempCelsius(forecast.day!.mintempC!),
                         style: AppStyles.getLightStyle(),
                       ),
                     ],
@@ -213,25 +211,25 @@ class _ForecastScreenState extends State<ForecastScreen> {
                 children: [
                   _detailForecastWidget(
                     Icons.water_drop,
-                    AppStrings.valuePercent(forecast.day!.avghumidity!),
-                    AppStrings.humidity,
+                    l10n.valuePercent(forecast.day!.avghumidity!),
+                    l10n.humidity,
                   ),
                   _detailForecastWidget(
                     Icons.air,
-                    AppStrings.windSpeed(forecast.day!.maxwindKph!),
-                    AppStrings.wind,
+                    l10n.windSpeed(forecast.day!.maxwindKph!),
+                    l10n.wind,
                   ),
                   _detailForecastWidget(
                     Icons.umbrella,
-                    AppStrings.valuePercent(forecast.day!.dailyChanceOfRain!),
-                    AppStrings.rain,
+                    l10n.valuePercent(forecast.day!.dailyChanceOfRain!),
+                    l10n.rain,
                   ),
                 ],
               ),
             ),
           ),
           const SizedBox(height: AppSize.s8),
-          Text(AppStrings.hourlyTitle, style: AppStyles.getBoldStyle()),
+          Text(l10n.hourlyTitle, style: AppStyles.getBoldStyle()),
           const SizedBox(height: AppSize.s8),
           SizedBox(
             height: AppSize.s128,
@@ -268,6 +266,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
   Widget _forecastHourCard(HourForecast hour) {
     final timeParts = hour.time!.split(' ');
     final displayTime = timeParts.length > 1 ? timeParts[1] : hour.time;
+    final l10n = AppLocalizations.of(context)!;
 
     return Card(
       elevation: AppSize.s8,
@@ -291,7 +290,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
                   const Icon(Icons.cloud, size: AppSize.s32),
             ),
             Text(
-              AppStrings.tempCelsius(hour.tempC!),
+              l10n.tempCelsius(hour.tempC!.toInt()),
               style: AppStyles.getBoldStyle(),
             ),
             Row(
@@ -303,7 +302,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
                   color: AppColors.seedColor,
                 ),
                 Text(
-                  AppStrings.valuePercent(hour.chanceOfRain!),
+                  l10n.valuePercent(hour.chanceOfRain!),
                   style: AppStyles.getLightStyle(),
                 ),
               ],

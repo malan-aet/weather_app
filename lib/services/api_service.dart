@@ -2,10 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:weather_app/models/forecast_model.dart';
-import 'package:weather_app/models/weather_location_model.dart';
-import 'package:weather_app/utils/app_constant.dart';
-import 'package:weather_app/utils/app_strings.dart';
+import 'package:weather_app/data/models/forecast_model.dart';
+import 'package:weather_app/data/models/weather_location_model.dart';
+import 'package:weather_app/core/constants/app_constant.dart';
 
 class ApiService {
   final http.Client client;
@@ -13,7 +12,7 @@ class ApiService {
 
   ApiService({http.Client? client, String? apiKey})
     : client = client ?? http.Client(),
-      _apiKey = apiKey ?? dotenv.env[AppStrings.envApiKeyName] ?? '';
+      _apiKey = apiKey ?? dotenv.env[AppConstants.envApiKeyName] ?? '';
 
   Future<WeatherLocationModel> fetchCurrentWeather(String city) async {
     final uri = Uri.parse(
@@ -30,7 +29,7 @@ class ApiService {
       final message = errorBody['error']?['message'];
       throw Exception(message);
     } else {
-      throw Exception(AppStrings.failedToLoadWeather);
+      throw Exception('Failed to load weather data.');
     }
   }
 
@@ -55,7 +54,7 @@ class ApiService {
       final message = errorBody['error']?['message'];
       throw Exception(message);
     } else {
-      throw Exception(AppStrings.failedToLoadForecast);
+      throw Exception('Failed to load forecast data.');
     }
   }
 }

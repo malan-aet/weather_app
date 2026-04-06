@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/models/forecast_model.dart';
-import 'package:weather_app/models/weather_location_model.dart';
+import 'package:weather_app/data/database/dao/weather_dao.dart';
+import 'package:weather_app/data/models/forecast_model.dart';
+import 'package:weather_app/data/models/weather_location_model.dart';
 import 'package:weather_app/services/api_service.dart';
-import '../services/storage_service.dart';
-import '../utils/app_strings.dart';
 
 class WeatherProvider extends ChangeNotifier {
   final ApiService _apiService;
-  final StorageService _storageService;
+  final WeatherDao _weatherDao;
 
   final Map<String, WeatherLocationModel> _weatherData = {};
   final Map<String, List<ForecastModel>> _forecastData = {};
   bool _isLoading = false;
   String? _errorMessage;
 
-  WeatherProvider({ApiService? apiService, StorageService? storageService})
+  WeatherProvider({ApiService? apiService, WeatherDao? weatherDao})
     : _apiService = apiService ?? ApiService(),
-      _storageService = storageService ?? StorageService();
+      _weatherDao = weatherDao ?? WeatherDao();
 
   Map<String, WeatherLocationModel> get weatherData =>
       Map.unmodifiable(_weatherData);
@@ -32,7 +31,7 @@ class WeatherProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final savedCities = await _storageService.loadCities();
+      final savedCities = await _weatherDao.getAllCities();
       for (final city in savedCities) {
         try {
           final weather = await _apiService.fetchCurrentWeather(city);
@@ -55,14 +54,14 @@ class WeatherProvider extends ChangeNotifier {
   //store city and update the current weather
   Future<void> addCity(String cityName) async {
     if (cityName.isEmpty) {
-      _errorMessage = AppStrings.enterCityName;
+      _errorMessage = 'Enter city name';
       notifyListeners();
       return;
     }
 
     for (final existingCity in _weatherData.keys) {
       if (existingCity.toLowerCase() == cityName.toLowerCase()) {
-        _errorMessage = AppStrings.cityAlreadyExists(existingCity);
+        _errorMessage = '$cityName is already in your list.';
         notifyListeners();
         return;
       }
@@ -76,18 +75,18 @@ class WeatherProvider extends ChangeNotifier {
       final weather = await _apiService.fetchCurrentWeather(cityName.trim());
 
       if (_weatherData.containsKey(weather.location.name)) {
-        _errorMessage = AppStrings.cityAlreadyExists(weather.location.name);
+        _errorMessage = '${weather.location.name} is already in your list.';
         _isLoading = false;
         notifyListeners();
         return;
       }
 
       _weatherData[weather.location.name] = weather;
-      await _storageService.addCity(weather.location.name);
+      await _weatherDao.insertCity(weather.location.name);
     } on Exception catch (e) {
       _errorMessage = e.toString();
     } catch (e) {
-      _errorMessage = AppStrings.somethingWentWrong;
+      _errorMessage = 'Something went wrong. Please try again.';
     }
 
     _isLoading = false;
@@ -97,7 +96,7 @@ class WeatherProvider extends ChangeNotifier {
   //renove city by city name
   Future<void> removeCity(String cityName) async {
     _weatherData.remove(cityName);
-    await _storageService.removeCity(cityName);
+    await _weatherDao.deleteCity(cityName);
     notifyListeners();
   }
 

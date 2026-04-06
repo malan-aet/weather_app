@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:weather_app/models/weather_location_model.dart';
+import 'package:weather_app/data/models/weather_location_model.dart';
 
 void main() {
   group('Weather Location Model', () {
