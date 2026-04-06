@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/l10n/app_localizations.dart';
 import 'package:weather_app/models/weather_location_model.dart';
 import 'package:weather_app/utils/app_styles.dart';
 import 'package:weather_app/utils/app_size.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_fonts.dart';
-import '../utils/app_strings.dart';
 
 class WeatherCard extends StatelessWidget {
   final WeatherLocationModel weather;
@@ -20,6 +20,7 @@ class WeatherCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       margin: const EdgeInsets.symmetric(
         horizontal: AppSize.s8,
@@ -68,7 +69,7 @@ class WeatherCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    AppStrings.tempCelsius(weather.currentCondition.tempc),
+                    l10n.tempCelsius(weather.currentCondition.tempc.toInt()),
                     style: AppStyles.getLightStyle(),
                   ),
                   const SizedBox(height: AppSize.s8),
@@ -82,9 +83,7 @@ class WeatherCard extends StatelessWidget {
                       ),
                       const SizedBox(width: AppSize.s8),
                       Text(
-                        AppStrings.valuePercent(
-                          weather.currentCondition.humidity,
-                        ),
+                        l10n.valuePercent(weather.currentCondition.humidity),
                         style: AppStyles.getRegularStyle(),
                       ),
                     ],
@@ -99,7 +98,7 @@ class WeatherCard extends StatelessWidget {
                   color: AppColors.seedColor,
                 ),
                 onPressed: onDelete,
-                tooltip: AppStrings.removeCity,
+                tooltip: l10n.removeCity,
               ),
             ],
           ),

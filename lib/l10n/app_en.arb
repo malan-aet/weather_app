@@ -1,0 +1,76 @@
+{
+  "@@locale": "en",
+  "appTitle": "Weather App",
+  "enterCityName": "Please enter a city name.",
+  "failedToLoadWeather": "Failed to load weather data.",
+  "somethingWentWrong": "Something went wrong. Please try again.",
+  "cityAlreadyExists": "{city} is already in your list.",
+  "@cityAlreadyExists": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToLoadForecast": "Failed to load forecast data.",
+  "homeTitle": "Weather",
+  "addCity": "Add City",
+  "removeCity": "Remove city",
+  "noCitiesTitle": "No cities added yet",
+  "noCitiesSubtitle": "Tap the button below to add your first city and see its current weather.",
+  "refreshAll": "Refresh all",
+  "cancel": "Cancel",
+  "add": "Add",
+  "ok": "Ok",
+  "addCityDialogTitle": "Add City",
+  "enterCityHint": "Enter city name",
+  "cityNameEmpty": "City name cannot be empty",
+  "removeCityTitle": "Remove City",
+  "remove": "Remove",
+  "removeCityMessage": "Do you want to remove {city}?",
+  "@removeCityMessage": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "cityRemoved": "{city} removed",
+  "@cityRemoved": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "tempCelsius": "{temp}°C",
+  "@tempCelsius": {
+    "placeholders": {
+      "temp": {
+        "type": "int"
+      }
+    }
+  },
+  "valuePercent": "{value}%",
+  "@valuePercent": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "windSpeed": "{kph} km/h",
+  "@windSpeed": {
+    "placeholders": {
+      "kph": {
+        "type": "double",
+        "format": "decimalPattern"
+      }
+    }
+  },
+  "humidity": "Humidity",
+  "wind": "Wind",
+  "rain": "Rain",
+  "forecastTitle": "3-Day Forecast",
+  "hourlyTitle": "Hourly"
+}

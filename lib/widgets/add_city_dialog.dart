@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../utils/app_strings.dart';
+import 'package:weather_app/l10n/app_localizations.dart';
 
 class AddCityDialog extends StatefulWidget {
   const AddCityDialog({super.key});
@@ -26,21 +26,22 @@ class _AddCityDialogState extends State<AddCityDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
-      title: const Text(AppStrings.addCityDialogTitle),
+      title: Text(l10n.addCityDialogTitle),
       content: Form(
         key: _formKey,
         child: TextFormField(
           controller: _controller,
           autofocus: true,
-          decoration: const InputDecoration(
-            hintText: AppStrings.enterCityHint,
+          decoration: InputDecoration(
+            hintText: l10n.enterCityHint,
             prefixIcon: Icon(Icons.location_city),
             border: OutlineInputBorder(),
           ),
           validator: (value) {
             if (value == null || value.trim().isEmpty) {
-              return AppStrings.cityNameEmpty;
+              return l10n.cityNameEmpty;
             }
             return null;
           },
@@ -50,9 +51,9 @@ class _AddCityDialogState extends State<AddCityDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(AppStrings.cancel),
+          child: Text(l10n.cancel),
         ),
-        FilledButton(onPressed: _submit, child: Text(AppStrings.add)),
+        FilledButton(onPressed: _submit, child: Text(l10n.add)),
       ],
     );
   }
